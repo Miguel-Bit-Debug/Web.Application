@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-import cadastroIcon from './assets/cadastro.png'
 
 
 function App() {
@@ -20,6 +19,14 @@ function App() {
     maiorDeIdade: '',
     dataLancamento: ''
   })
+
+  var GameModel = {
+    nome: gameSelected.nome,
+    descricao: gameSelected.descricao,
+    multiplayer: gameSelected.multiplayer === 'on' ? true : false,
+    maiorDeIdade: gameSelected.maiorDeIdade === 'on' ? true : false,
+    dataLancamento: gameSelected.dataLancamento
+  }
 
   const handlerChange = (e) => {
     const { name, value } = e.target
@@ -39,19 +46,8 @@ function App() {
       })
   }
 
-  const headers = {
-    'Content-Type': 'application/json'
-  }
-
   const gamePost = async () => {
-    var GameModel = {
-      nome: gameSelected.nome,
-      descricao: gameSelected.descricao,
-      multiplayer: gameSelected.multiplayer,
-      maiorDeIdade: gameSelected.maiorDeIdade,
-      dataLancamento: gameSelected.dataLancamento
-    }
-    axios.post(baseUrl, )
+    axios.post(baseUrl, GameModel)
       .then(response => {
         setData(data.concat(response.data))
         abrirModal();
